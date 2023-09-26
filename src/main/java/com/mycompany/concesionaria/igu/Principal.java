@@ -1,4 +1,4 @@
-package com.mycompany.concecionaria.igu;
+package com.mycompany.concesionaria.igu;
 
 public class Principal extends javax.swing.JFrame {
 

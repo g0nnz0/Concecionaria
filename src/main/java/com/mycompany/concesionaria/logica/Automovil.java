@@ -1,4 +1,4 @@
-package com.mycompany.concecionaria.logica;
+package com.mycompany.concesionaria.logica;
 
 public class Automovil {
     private int id;
