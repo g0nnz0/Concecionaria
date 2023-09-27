@@ -30,4 +30,22 @@ public class ControladoraLogica {
         controlPersis.borrarAuto(idAuto);
     }
 
+    public Automovil traerAuto(int idAuto) {
+        return controlPersis.traerAuto(idAuto);
+    }
+
+    public void modificarAuto(Automovil auto, String modelo, String marca, String motor, String color, String patente, int cantPuertas) {
+        
+        //Seteo todos los valores de auto excepto el id
+        auto.setModelo(modelo);
+        auto.setMarca(marca);
+        auto.setMotor(motor);
+        auto.setColor(color);
+        auto.setPatente(patente);
+        auto.setCantPuertas(cantPuertas);
+        
+        //Le paso el auto con los valores modificados a la persistencia
+        controlPersis.modificarAuto(auto);
+    }
+
 }

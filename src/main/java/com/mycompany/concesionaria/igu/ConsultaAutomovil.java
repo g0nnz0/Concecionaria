@@ -174,7 +174,28 @@ public class ConsultaAutomovil extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
+        //Control de que la tabla no esté vacia
+        if (tablaAutos.getRowCount() > 0) {
+            //Validar que se selecciona un registro
+            if (tablaAutos.getSelectedRow() != -1) {
+                //obtener id del auto a borrar
+                int idAuto =  Integer.parseInt(String.valueOf(tablaAutos.getValueAt(tablaAutos.getSelectedRow(), 0)));
+                
+                ModificarAuto pantalla = new ModificarAuto(idAuto);
+                pantalla.setVisible(true);
+                pantalla.setLocationRelativeTo(null);
+                
+                this.dispose();
+                
+                
+            }
+            else{
+                mostrarMensaje("No seleccionó un registro para modificar", "Error", "Error al modificar");
+            }
+        }
+        else{
+            mostrarMensaje("La tabla está vacia", "Error", "Error al modificar");
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
