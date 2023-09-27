@@ -1,14 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.mycompany.concesionaria.igu;
 
-/**
- *
- * @author bonza
- */
+import com.mycompany.concesionaria.logica.Automovil;
+import com.mycompany.concesionaria.logica.ControladoraLogica;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 public class ConsultaAutomovil extends javax.swing.JFrame {
+
+    ControladoraLogica controlLogic = new ControladoraLogica();
 
     /**
      * Creates new form ConsultaAutomovil
@@ -30,18 +29,23 @@ public class ConsultaAutomovil extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaAutos = new javax.swing.JTable();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel1.setText("Consulta de Automoviles");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaAutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -52,7 +56,7 @@ public class ConsultaAutomovil extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaAutos);
 
         btnModificar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnModificar.setText("Modificar");
@@ -148,7 +152,11 @@ public class ConsultaAutomovil extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnModificarActionPerformed
 
-    
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+
+        cargarTabla();
+    }//GEN-LAST:event_formWindowOpened
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
@@ -157,6 +165,41 @@ public class ConsultaAutomovil extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tablaAutos;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarTabla() {
+        //Hacemos que la tabla no sea editable 
+        DefaultTableModel modeloTabla = new DefaultTableModel() {
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        //Creamos un vector que tendrá los titulos de las columnas
+        String titulos[] = {"Id", "Modelo", "Marca", "Motor", "Color", "Patente", "Puertas"};
+
+        //Le agrego los titulos al modelo de tabla
+        modeloTabla.setColumnIdentifiers(titulos);
+
+        //Traer datos desde la base de datos (En esta etapa la gui le pide a la logica)
+        List<Automovil> listaAutomoviles = controlLogic.traerAutos();
+
+        
+
+        //setear los datos en la tabla
+        if (listaAutomoviles != null) {
+            for (Automovil autito : listaAutomoviles) {
+                Object[] objeto = {autito.getId(), autito.getModelo(), autito.getMarca(), autito.getMotor(),
+                autito.getColor(), autito.getPatente(), autito.getCantPuertas()};
+                
+                modeloTabla.addRow(objeto);
+            }
+        }
+        
+        //Le agrego el modelo de tabla a la tabla en la gui
+        tablaAutos.setModel(modeloTabla);
+    }
 }
