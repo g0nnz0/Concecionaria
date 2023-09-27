@@ -1,6 +1,8 @@
 package com.mycompany.concesionaria.igu;
 
 import com.mycompany.concesionaria.logica.ControladoraLogica;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 public class AltaAutomovil extends javax.swing.JFrame {
     
@@ -36,6 +38,7 @@ public class AltaAutomovil extends javax.swing.JFrame {
         txtCantPuertas = new javax.swing.JTextField();
         btnLimpiar = new javax.swing.JButton();
         btnAgregar = new javax.swing.JButton();
+        btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,6 +93,14 @@ public class AltaAutomovil extends javax.swing.JFrame {
             }
         });
 
+        btnVolver.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnVolver.setText("Volver");
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -136,7 +147,9 @@ public class AltaAutomovil extends javax.swing.JFrame {
                         .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(69, 69, 69)
                         .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(131, 131, 131))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
@@ -177,7 +190,8 @@ public class AltaAutomovil extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23))
         );
 
@@ -205,6 +219,16 @@ public class AltaAutomovil extends javax.swing.JFrame {
     int cantPuertas = Integer.parseInt(txtCantPuertas.getText());
     
     controlLogic.agregarAutomovil(modelo, marca, motor, color, patente, cantPuertas);
+    
+    mostrarMensaje("Automovil agregado exitosamente","Info","Alta exitosa");
+    
+    ConsultaAutomovil pantalla = new ConsultaAutomovil();
+    pantalla.setVisible(true);
+    pantalla.setLocationRelativeTo(null);
+    
+    this.dispose();
+    
+    
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
@@ -214,12 +238,22 @@ public class AltaAutomovil extends javax.swing.JFrame {
     txtColor.setText("");
     txtPatente.setText("");
     txtCantPuertas.setText("");
+    
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        Principal pantalla = new Principal();
+        pantalla.setVisible(true);
+        pantalla.setLocationRelativeTo(null);
+        
+        this.dispose();
+    }//GEN-LAST:event_btnVolverActionPerformed
+  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -236,4 +270,21 @@ public class AltaAutomovil extends javax.swing.JFrame {
     private javax.swing.JTextField txtMotor;
     private javax.swing.JTextField txtPatente;
     // End of variables declaration//GEN-END:variables
+
+    
+    public void mostrarMensaje(String mensaje, String tipo, String titulo){
+        JOptionPane panelMensaje = new JOptionPane(mensaje);
+        if (tipo.equals("Info")) {
+            panelMensaje.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if(tipo.equals("Error")){
+            panelMensaje.setMessageType(JOptionPane.ERROR_MESSAGE);
+        }
+        
+        JDialog dialog = panelMensaje.createDialog(titulo);
+        dialog.setAlwaysOnTop(true);
+        dialog.setVisible(true);
+        
+        
+    }
 }

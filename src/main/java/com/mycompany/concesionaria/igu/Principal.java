@@ -116,12 +116,16 @@ public class Principal extends javax.swing.JFrame {
         AltaAutomovil pantalla = new AltaAutomovil();
         pantalla.setVisible(true);
         pantalla.setLocationRelativeTo(null);
+        
+        this.dispose();
     }//GEN-LAST:event_btnAltaAutoActionPerformed
 
     private void btnConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaActionPerformed
         ConsultaAutomovil pantalla = new ConsultaAutomovil();
         pantalla.setVisible(true);
         pantalla.setLocationRelativeTo(null);
+        
+        this.dispose();
     }//GEN-LAST:event_btnConsultaActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
