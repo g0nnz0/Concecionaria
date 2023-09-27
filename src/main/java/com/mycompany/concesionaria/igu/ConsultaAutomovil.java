@@ -3,6 +3,8 @@ package com.mycompany.concesionaria.igu;
 import com.mycompany.concesionaria.logica.Automovil;
 import com.mycompany.concesionaria.logica.ControladoraLogica;
 import java.util.List;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class ConsultaAutomovil extends javax.swing.JFrame {
@@ -145,7 +147,30 @@ public class ConsultaAutomovil extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        //Control de que la tabla no esté vacia
+        if (tablaAutos.getRowCount() > 0) {
+            //Validar que se selecciona un registro
+            if (tablaAutos.getSelectedRow() != -1) {
+                //obtener id del auto a borrar
+                int idAuto =  Integer.parseInt(String.valueOf(tablaAutos.getValueAt(tablaAutos.getSelectedRow(), 0)));
+                
+                //Empiezo el recorrido methods para llegar a la BD y borrar el auto
+                controlLogic.borrarAuto(idAuto);
+                
+                //Muestro mensaje
+                mostrarMensaje("Auto borrado exitosamente", "Info", "Borrado Exitoso");
+                
+                //Actualizo la ventana
+                cargarTabla();
+                
+            }
+            else{
+                mostrarMensaje("No seleccionó un registro para eliminar", "Error", "Error al eliminar");
+            }
+        }
+        else{
+            mostrarMensaje("La tabla está vacia", "Error", "Error al eliminar");
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -201,5 +226,21 @@ public class ConsultaAutomovil extends javax.swing.JFrame {
         
         //Le agrego el modelo de tabla a la tabla en la gui
         tablaAutos.setModel(modeloTabla);
+    }
+    
+    public void mostrarMensaje(String mensaje, String tipo, String titulo){
+        JOptionPane panelMensaje = new JOptionPane(mensaje);
+        if (tipo.equals("Info")) {
+            panelMensaje.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if(tipo.equals("Error")){
+            panelMensaje.setMessageType(JOptionPane.ERROR_MESSAGE);
+        }
+        
+        JDialog dialog = panelMensaje.createDialog(titulo);
+        dialog.setAlwaysOnTop(true);
+        dialog.setVisible(true);
+        
+        
     }
 }
